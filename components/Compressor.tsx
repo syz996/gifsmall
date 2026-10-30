@@ -13,6 +13,7 @@ function isGif(file: File) {
   const extensionMatches = /\.gif$/i.test(file.name);
   return file.type === 'image/gif' || extensionMatches;
 }
+console.log('abcxxxxxxxxx')
 
 export default function Compressor() {
   const [file, setFile] = useState<File | null>(null);
