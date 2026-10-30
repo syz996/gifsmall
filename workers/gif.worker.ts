@@ -40,6 +40,12 @@ self.addEventListener('message', (ev: MessageEvent<Msg>) => {
     const encoder = GIFEncoder();
     let previous: { left: number; top: number; width: number; height: number; disposal: number } | null = null;
 
+    // 全局色表（整份动画只量化一次）
+    let palette: ReturnType<typeof quantize> | undefined;
+    let format: 'rgb565' | 'rgba4444' = 'rgb565';
+    let transparentIndex: number | undefined;
+    let paletteWritten = false;
+
     for (const frame of frames) {
       if (previous && previous.disposal === 2) {
         ctx.clearRect(previous.left, previous.top, previous.width, previous.height);
@@ -59,16 +65,41 @@ self.addEventListener('message', (ev: MessageEvent<Msg>) => {
         imageData.byteLength,
       );
 
-      const palette = quantize(rgbaData, maxColors, { format: 'rgba4444' });
-      const indexed = applyPalette(rgbaData, palette, 'rgba4444');
+      // 第 0 帧决定全局色表：有透明像素用 rgba4444，否则 rgb565（色深高 4 倍、体积不增）
+      if (!palette) {
+        let hasAlpha = false;
+        for (let p = 3; p < rgbaData.length; p += 4) {
+          if (rgbaData[p] < 128) { hasAlpha = true; break; }
+        }
+        format = hasAlpha ? 'rgba4444' : 'rgb565';
+        palette = hasAlpha
+          ? quantize(rgbaData, maxColors, { format: 'rgba4444', oneBitAlpha: true })
+          : quantize(rgbaData, maxColors);
+
+        if (hasAlpha) {
+          const colors = palette as unknown as number[][];
+          for (let p = 0; p < colors.length; p++) {
+            const c = colors[p];
+            if (c.length > 3 && c[3] === 0) {
+              transparentIndex = p;
+              break;
+            }
+          }
+        }
+      }
+
+      const indexed = applyPalette(rgbaData, palette!, format);
       const delay = frame.delay && frame.delay >= 20 ? frame.delay : 100;
 
-      // MVP encoder path: full-canvas frames with a generated palette.
-      // Complex transparency/disposal GIFs should be visually checked after export.
       encoder.writeFrame(indexed, outW, outH, {
-        palette,
+        // 只有第 0 帧写色表，后续帧复用（每帧省 768 字节）
+        ...(paletteWritten ? {} : { palette: palette! }),
         delay,
+        ...(transparentIndex !== undefined
+          ? { transparent: true, transparentIndex, dispose: 2 }
+          : {}),
       });
+      paletteWritten = true;
 
       previous = {
         left,
