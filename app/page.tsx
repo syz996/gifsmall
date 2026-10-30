@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: { absolute: 'GIF Compressor — Compress GIF Online, No Upload' },
   description:
     'Compress GIF and animated GIF right in your browser. Reduce GIF file size locally with resize and color controls. Free, no upload, no watermark.',
-  alternates: { canonical: 'https://gifsmall.com' },
+  alternates: { canonical: 'https://gifsmall.org' },
 };
 
 const faqs = [
