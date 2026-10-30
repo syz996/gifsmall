@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Compressor from '@/components/Compressor';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: { absolute: 'GIF Compressor — Compress GIF Online, No Upload' },
@@ -130,6 +131,12 @@ export default function Home() {
           ))}
         </div>
       </section>
+      <h2>Need a different size instead?</h2>
+      <p>
+        Resizing changes the dimensions; compressing reduces the file size. If your GIF is the right size but still
+        heavy, stay here. If it&apos;s simply too large in pixels, use the{' '}
+        <Link href="/gif-resizer">GIF resizer</Link> to set an exact width and height.
+      </p>
 
       <footer className="site-footer">
         <a className="brand footer-brand" href="/">
