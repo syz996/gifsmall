@@ -53,7 +53,11 @@ self.addEventListener('message', (ev: MessageEvent<Msg>) => {
       outputContext.drawImage(canvas, 0, 0, outW, outH);
 
       const imageData = outputContext.getImageData(0, 0, outW, outH).data;
-      const rgbaData = new Uint8Array(imageData);
+      const rgbaData = new Uint8Array(
+        imageData.buffer as ArrayBuffer,
+        imageData.byteOffset,
+        imageData.byteLength,
+      );
 
       const palette = quantize(rgbaData, maxColors, { format: 'rgba4444' });
       const indexed = applyPalette(rgbaData, palette, 'rgba4444');

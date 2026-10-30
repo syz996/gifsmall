@@ -101,6 +101,9 @@ export default function ResizerTool() {
         try {
             const { GIFEncoder, quantize, applyPalette } = await import('gifenc');
             const gif = GIFEncoder();
+            let palette: ReturnType<typeof quantize> | undefined;
+            let format: 'rgb565' | 'rgba4444' = 'rgb565';
+            let transparentIndex: number | undefined;
             const canvas = document.createElement('canvas');
             canvas.width = w;
             canvas.height = h;
@@ -114,23 +117,31 @@ export default function ResizerTool() {
                 ctx.drawImage(data.bitmaps[i], 0, 0, w, h);
                 const rgba = new Uint8Array(ctx.getImageData(0, 0, w, h).data);
 
-                const palette = quantize(rgba, 256, { format: 'rgba4444', oneBitAlpha: true });
-                const index = applyPalette(rgba, palette, 'rgba4444');
-                const colors = palette as unknown as number[][];
+                // 第 0 帧决定全局色表：有透明像素才用 rgba4444，否则用默认 rgb565（色深更高、无额外开销）
+                if (i === 0) {
+                    let hasAlpha = false;
+                    for (let p = 3; p < rgba.length; p += 4) {
+                        if (rgba[p] < 128) { hasAlpha = true; break; }
+                    }
+                    format = hasAlpha ? 'rgba4444' : 'rgb565';
+                    palette = hasAlpha
+                        ? quantize(rgba, 256, { format: 'rgba4444', oneBitAlpha: true })
+                        : quantize(rgba, 256);
 
-                let transparentIndex: number | undefined;
-
-
-                for (let p = 0; p < colors.length; p++) {
-                    const color = colors[p];
-                    if (color.length > 3 && color[3] === 0) {
-                        transparentIndex = p;
-                        break;
+                    if (hasAlpha) {
+                        const colors = palette as unknown as number[][];
+                        for (let p = 0; p < colors.length; p++) {
+                            const c = colors[p];
+                            if (c.length > 3 && c[3] === 0) { transparentIndex = p; break; }
+                        }
                     }
                 }
 
+                const index = applyPalette(rgba, palette!, format);
+
                 gif.writeFrame(index, w, h, {
-                    palette,
+                    // 只有第 0 帧写色表，后续帧复用全局色表
+                    ...(i === 0 ? { palette } : {}),
                     delay: data.delays[i],
                     ...(transparentIndex !== undefined ? { transparent: true, transparentIndex } : {}),
                 });
