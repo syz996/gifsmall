@@ -1,12 +1,29 @@
 import type { Metadata } from 'next';
 import Compressor from '@/components/Compressor';
 import Link from 'next/link';
+import { SITE_URL } from '@/lib/site';
+
+const TITLE = 'GIF Compressor — Compress GIF Online, No Upload';
+const DESCRIPTION =
+  'Compress GIF and animated GIF right in your browser. Reduce GIF file size locally with resize and color controls. Free, no upload, no watermark.';
+const SHORT_DESCRIPTION =
+  'Compress animated GIFs locally in your browser. Shrink the file with size and color controls — no upload, no watermark.';
 
 export const metadata: Metadata = {
-  title: { absolute: 'GIF Compressor — Compress GIF Online, No Upload' },
-  description:
-    'Compress GIF and animated GIF right in your browser. Reduce GIF file size locally with resize and color controls. Free, no upload, no watermark.',
-  alternates: { canonical: 'https://gifsmall.org' },
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: `${SITE_URL}/` },
+  openGraph: {
+    title: TITLE,
+    description: SHORT_DESCRIPTION,
+    url: `${SITE_URL}/`,
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: TITLE,
+    description: SHORT_DESCRIPTION,
+  },
 };
 
 const faqs = [
