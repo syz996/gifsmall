@@ -78,16 +78,6 @@ export default function Home() {
 
   return (
     <main className="page-shell">
-      <header className="site-header">
-        <a className="brand" href="/" aria-label="GIFSmall home">
-          <span className="brand-mark">G</span>
-          <span>GIFSmall</span>
-        </a>
-        <nav aria-label="Main navigation">
-          <a href="#how-it-works">How it works</a>
-          <a href="#faq">FAQ</a>
-        </nav>
-      </header>
 
       <section className="hero">
         <span className="eyebrow">FREE ONLINE GIF TOOL</span>
@@ -159,14 +149,6 @@ export default function Home() {
           <Link href="/gif-resizer">GIF resizer</Link> to set an exact width and height.
         </p>
       </section>
-
-      <footer className="site-footer">
-        <a className="brand footer-brand" href="/">
-          <span className="brand-mark">G</span><span>GIFSmall</span>
-        </a>
-        <p>Free GIF compression in your browser.</p>
-        <span>© {new Date().getFullYear()} GIFSmall</span>
-      </footer>
 
       <script
         type="application/ld+json"

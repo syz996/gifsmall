@@ -132,6 +132,10 @@ a { color: inherit; text-decoration: none; }
   .site-footer { flex-wrap: wrap; }
   .site-footer p { order: 3; width: 100%; }
 }
+@media (max-width: 560px) {
+  .site-header { height: auto; padding: 14px 0; flex-wrap: wrap; gap: 10px; }
+  .site-header nav { gap: 16px; font-size: 13px; }
+}
 .retry-row {
   display: flex;
   flex-wrap: wrap;
