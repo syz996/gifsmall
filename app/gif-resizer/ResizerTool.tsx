@@ -143,7 +143,11 @@ export default function ResizerTool() {
                     // 只有第 0 帧写色表，后续帧复用全局色表
                     ...(i === 0 ? { palette } : {}),
                     delay: data.delays[i],
-                    ...(transparentIndex !== undefined ? { transparent: true, transparentIndex } : {}),
+                    encoder.writeFrame(indexed, outW, outH, {
+                      ...(paletteWritten ? {} : { palette: palette! }),
+                      delay,
+                    });
+                    paletteWritten = true;
                 });
 
                 setProgress(45 + Math.round(((i + 1) / data.bitmaps.length) * 50));
