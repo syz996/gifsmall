@@ -141,4 +141,10 @@ a { color: inherit; text-decoration: none; }
 
 .retry-row .secondary-button {
   flex: 1 1 auto;
+  margin: 0;
+  padding: 10px 14px;
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  background: #f7f6ff;
+  font-weight: 700;
 }
