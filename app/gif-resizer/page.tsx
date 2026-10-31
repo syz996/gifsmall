@@ -56,65 +56,126 @@ export default function Page() {
   return (
     <main>
       <div className="page-shell">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+        />
 
-      <h1>GIF Resizer</h1>
-      <p>
-        Resize an animated GIF to any width and height — right in your browser. Set an exact pixel size or scale
-        down by percentage, keep the animation and transparency, and download the result without uploading
-        anything.
-      </p>
+        <section className="hero">
+          <span className="eyebrow">FREE ONLINE GIF TOOL</span>
+          <h1>GIF Resizer</h1>
+          <p className="hero-copy">
+            Resize an animated GIF to any width and height — right in your browser. Set an exact
+            pixel size or scale down by percentage, keep the animation and transparency, and
+            download the result without uploading anything.
+          </p>
+        </section>
 
-      <ResizerTool />
+        <ResizerTool />
 
-      <h2>How to resize a GIF in three steps</h2>
-      <ol>
-        <li><strong>Drop your GIF in.</strong> Nothing is uploaded — the file is read locally in your browser.</li>
-        <li><strong>Set the size.</strong> Type a width or height, or pick 75%, 50% or 25%. With the lock on, the aspect ratio is preserved so nothing gets stretched.</li>
-        <li><strong>Download.</strong> Every frame is scaled and re-encoded, so the animation and its timing survive the resize.</li>
-      </ol>
+        <section className="content-section" id="how-it-works">
+          <div className="section-heading">
+            <span className="eyebrow">HOW IT WORKS</span>
+            <h2>How to resize a GIF in three steps</h2>
+          </div>
+          <div className="steps-grid">
+            <div className="info-card">
+              <span className="step-number">01</span>
+              <h3>Drop your GIF in</h3>
+              <p>Nothing is uploaded — the file is read locally in your browser.</p>
+            </div>
+            <div className="info-card">
+              <span className="step-number">02</span>
+              <h3>Set the size</h3>
+              <p>
+                Type a width or height, or pick 75%, 50% or 25%. With the lock on, the aspect ratio
+                is preserved so nothing gets stretched.
+              </p>
+            </div>
+            <div className="info-card">
+              <span className="step-number">03</span>
+              <h3>Download</h3>
+              <p>
+                Every frame is scaled and re-encoded, so the animation and its timing survive the
+                resize.
+              </p>
+            </div>
+          </div>
+        </section>
 
-      <h2>Resizing is not the same as compressing</h2>
-      <p>
-        Resizing changes how many pixels wide and tall each frame is. Compressing reduces the file size while
-        keeping the dimensions. A GIF that feels too heavy is often simply too big in pixels — a 800 × 800 emoji
-        has 16 times the pixel data of a 200 × 200 one, and scaling it down fixes the size problem in one step.
-      </p>
-      <p>
-        If your GIF is already the right dimensions and still too heavy, use the{' '}
-        <Link href="/">GIF compressor</Link> instead.
-      </p>
+        <section className="content-section">
+          <div className="section-heading">
+            <span className="eyebrow">SIZE VS WEIGHT</span>
+            <h2>Resizing is not the same as compressing</h2>
+          </div>
+          <p className="section-copy">
+            Resizing changes how many pixels wide and tall each frame is. Compressing reduces the
+            file size while keeping the dimensions. A GIF that feels too heavy is often simply too
+            big in pixels — a 800 × 800 emoji has 16 times the pixel data of a 200 × 200 one, and
+            scaling it down fixes the size problem in one step.
+          </p>
+          <p className="section-copy">
+            If your GIF is already the right dimensions and still too heavy, use the{' '}
+            <Link className="text-link" href="/">
+              GIF compressor
+            </Link>{' '}
+            instead.
+          </p>
+        </section>
 
-      <h2>What size should your GIF be?</h2>
-      <table>
-        <thead>
-          <tr><th>Where it will be used</th><th>Recommended size</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Discord or Slack emoji</td><td>128 × 128 px</td></tr>
-          <tr><td>Twitter / X avatar</td><td>400 × 400 px</td></tr>
-          <tr><td>Instagram post</td><td>1080 × 1080 px</td></tr>
-          <tr><td>Email signature</td><td>600 px wide</td></tr>
-          <tr><td>Website hero or banner</td><td>1200 px wide max</td></tr>
-        </tbody>
-      </table>
+        <section className="content-section">
+          <div className="section-heading">
+            <span className="eyebrow">CHEAT SHEET</span>
+            <h2>What size should your GIF be?</h2>
+          </div>
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Where it will be used</th>
+                  <th>Recommended size</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Discord or Slack emoji</td><td>128 × 128 px</td></tr>
+                <tr><td>Twitter / X avatar</td><td>400 × 400 px</td></tr>
+                <tr><td>Instagram post</td><td>1080 × 1080 px</td></tr>
+                <tr><td>Email signature</td><td>600 px wide</td></tr>
+                <tr><td>Website hero or banner</td><td>1200 px wide max</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
 
-      <h2>Why resize locally?</h2>
-      <p>
-        Most online GIF tools upload your file to a server, process it there and send it back. That means a wait
-        on a slow connection, and a copy of your file sitting on someone else&apos;s disk. This page skips both:
-        decoding, scaling and re-encoding all happen on your own device, so the tool works offline once loaded
-        and your GIF never leaves the browser.
-      </p>
+        <section className="content-section">
+          <div className="section-heading">
+            <span className="eyebrow">PRIVACY</span>
+            <h2>Why resize locally?</h2>
+          </div>
+          <p className="section-copy">
+            Most online GIF tools upload your file to a server, process it there and send it back.
+            That means a wait on a slow connection, and a copy of your file sitting on someone
+            else&apos;s disk. This page skips both: decoding, scaling and re-encoding all happen on
+            your own device, so the tool works offline once loaded and your GIF never leaves the
+            browser.
+          </p>
+        </section>
 
-      <h2>Frequently asked questions</h2>
-      {FAQS.map((f) => (
-        <details key={f.q}>
-          <summary>{f.q}</summary>
-          <p>{f.a}</p>
-        </details>
-      ))}
-        </div>
+        <section className="content-section faq-section" id="faq">
+          <div className="section-heading">
+            <span className="eyebrow">FAQ</span>
+            <h2>Frequently asked questions</h2>
+          </div>
+          <div className="faq-list">
+            {FAQS.map((f) => (
+              <details key={f.q} className="faq-item">
+                <summary>{f.q}</summary>
+                <p>{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+      </div>
     </main>
   );
 }

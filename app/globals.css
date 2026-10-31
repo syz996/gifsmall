@@ -170,3 +170,12 @@ a { color: inherit; text-decoration: none; }
 .resizer-tool .result img{display:block;max-width:100%;max-height:340px;margin:0 auto;border:1px solid var(--line);border-radius:10px;background:repeating-conic-gradient(#f5f6f8 0 25%,#fff 0 50%) 50%/18px 18px}
 .resizer-tool .result p{color:var(--muted);font-size:12px}
 .resizer-tool .result a{display:inline-flex;align-items:center;justify-content:center;width:100%;min-height:46px;margin-top:12px;border-radius:9px;background:var(--primary);color:#fff;font-weight:700;font-size:14px}
+.section-copy{max-width:780px;margin:0 auto 14px;color:var(--muted);font-size:14px;line-height:1.8}
+.table-wrap{max-width:780px;margin:0 auto;overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+.table-wrap table{width:100%;min-width:420px;border-collapse:collapse;font-size:13px}
+.table-wrap th{padding:12px 16px;border-bottom:1px solid var(--line);background:var(--soft);color:#455064;font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;text-align:left;white-space:nowrap}
+.table-wrap td{padding:12px 16px;border-bottom:1px solid #f0f2f6;color:var(--ink)}
+.table-wrap td:first-child{color:var(--muted)}
+.table-wrap tbody tr:last-child td{border-bottom:0}
+.table-wrap tbody tr:hover{background:#fafbff}
+.resizer-tool .controls>button[type=button]:disabled{opacity:.65;cursor:wait}
