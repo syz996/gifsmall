@@ -228,7 +228,7 @@ export default function ResizerTool() {
                     <p>
                         {result.w} × {result.h} · {kb(result.bytes)}
                         {src.bytes > 0 && result.bytes > 0 && (
-                            <> · {result.bytes < src.bytes ? `${Math.round((1 - result.bytes / src.bytes) * 100)}% smaller` : 'larger than original'}</>
+                            <> · {result.bytes < src.bytes ? `${Math.round((1 - result.bytes / src.bytes) * 100)}% smaller` : 'already optimized — try a size button above'}</>
                         )}
                     </p>
                     <a href={result.url} download={`resized-${result.w}x${result.h}.gif`}>Download GIF</a>
