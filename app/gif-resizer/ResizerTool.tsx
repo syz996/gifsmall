@@ -103,7 +103,6 @@ export default function ResizerTool() {
             const gif = GIFEncoder();
             let palette: ReturnType<typeof quantize> | undefined;
             let format: 'rgb565' | 'rgba4444' = 'rgb565';
-            let transparentIndex: number | undefined;
             const canvas = document.createElement('canvas');
             canvas.width = w;
             canvas.height = h;

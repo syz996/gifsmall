@@ -75,17 +75,6 @@ self.addEventListener('message', (ev: MessageEvent<Msg>) => {
         palette = hasAlpha
           ? quantize(rgbaData, maxColors, { format: 'rgba4444', oneBitAlpha: true })
           : quantize(rgbaData, maxColors);
-
-        if (hasAlpha) {
-          const colors = palette as unknown as number[][];
-          for (let p = 0; p < colors.length; p++) {
-            const c = colors[p];
-            if (c.length > 3 && c[3] === 0) {
-              transparentIndex = p;
-              break;
-            }
-          }
-        }
       }
 
       const indexed = applyPalette(rgbaData, palette!, format);

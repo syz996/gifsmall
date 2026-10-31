@@ -132,3 +132,13 @@ a { color: inherit; text-decoration: none; }
   .site-footer { flex-wrap: wrap; }
   .site-footer p { order: 3; width: 100%; }
 }
+.retry-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.retry-row .secondary-button {
+  flex: 1 1 auto;
+}
