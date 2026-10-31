@@ -55,6 +55,7 @@ export default function Page() {
 
   return (
     <main>
+      <div className="page-shell">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
 
       <h1>GIF Resizer</h1>
@@ -113,6 +114,7 @@ export default function Page() {
           <p>{f.a}</p>
         </details>
       ))}
+        </div>
     </main>
   );
 }
