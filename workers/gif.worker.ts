@@ -95,11 +95,6 @@ self.addEventListener('message', (ev: MessageEvent<Msg>) => {
         // 只有第 0 帧写色表，后续帧复用（每帧省 768 字节）
         ...(paletteWritten ? {} : { palette: palette! }),
         delay,
-        encoder.writeFrame(indexed, outW, outH, {
-        ...(paletteWritten ? {} : { palette: palette! }),
-        delay,
-      });
-      paletteWritten = true;
       });
       paletteWritten = true;
 

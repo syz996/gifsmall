@@ -127,14 +127,6 @@ export default function ResizerTool() {
                     palette = hasAlpha
                         ? quantize(rgba, 256, { format: 'rgba4444', oneBitAlpha: true })
                         : quantize(rgba, 256);
-
-                    if (hasAlpha) {
-                        const colors = palette as unknown as number[][];
-                        for (let p = 0; p < colors.length; p++) {
-                            const c = colors[p];
-                            if (c.length > 3 && c[3] === 0) { transparentIndex = p; break; }
-                        }
-                    }
                 }
 
                 const index = applyPalette(rgba, palette!, format);
@@ -143,11 +135,6 @@ export default function ResizerTool() {
                     // 只有第 0 帧写色表，后续帧复用全局色表
                     ...(i === 0 ? { palette } : {}),
                     delay: data.delays[i],
-                    encoder.writeFrame(indexed, outW, outH, {
-                      ...(paletteWritten ? {} : { palette: palette! }),
-                      delay,
-                    });
-                    paletteWritten = true;
                 });
 
                 setProgress(45 + Math.round(((i + 1) / data.bitmaps.length) * 50));
