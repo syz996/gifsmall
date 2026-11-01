@@ -20,7 +20,7 @@ const FAQS = [
   },
   {
     q: 'Can I resize a GIF without uploading it?',
-    a: 'Yes. This tool runs entirely in your browser using the WebCodecs API. The file is read into memory on your own device, resized frame by frame and encoded back into a GIF there — it is never sent to a server, so there is no upload wait and no copy of your file anywhere.',
+    a: 'Yes. This tool runs entirely in your browser with a Web Worker. The file is read into memory on your own device, resized frame by frame and encoded back into a GIF there — it is never sent to a server, so there is no upload wait and no copy of your file anywhere.',
   },
   {
     q: 'Will transparent backgrounds stay transparent?',
