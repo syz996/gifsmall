@@ -18,6 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <nav aria-label="Main navigation">
             <Link href="/">GIF compressor</Link>
             <Link href="/gif-resizer/">GIF resizer</Link>
+            <Link href="/reduce-gif-size/">Reduce GIF size</Link> 
           </nav>
         </header>
 
