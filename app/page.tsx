@@ -143,10 +143,20 @@ export default function Home() {
           <span className="eyebrow">ALSO USEFUL</span>
           <h2>Need a different size instead?</h2>
         </div>
-        <p>
-          Resizing changes the dimensions; compressing reduces the file size. If your GIF is the right size but
-          still heavy, stay here. If it&apos;s simply too large in pixels, use the{' '}
-          <Link href="/gif-resizer">GIF resizer</Link> to set an exact width and height.
+        <p className="section-copy">
+          Resizing changes the dimensions; compressing reduces the file size. If your GIF is the
+          right size but still heavy, stay here. If it&apos;s simply too large in pixels, use the{' '}
+          <Link className="text-link" href="/gif-resizer/">
+            GIF resizer
+          </Link>{' '}
+          to set an exact width and height.
+        </p>
+        <p className="section-copy">
+          Need a specific file size?{' '}
+          <Link className="text-link" href="/reduce-gif-size/">
+            Reduce GIF to 1 MB or 512 KB
+          </Link>{' '}
+          lets you set a hard limit and finds the best quality that fits under it.
         </p>
       </section>
 

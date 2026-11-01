@@ -9,5 +9,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: `${SITE_URL}/`, lastModified: LASTMOD, changeFrequency: 'weekly', priority: 1 },
     { url: `${SITE_URL}/gif-resizer/`, lastModified: LASTMOD, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${SITE_URL}/reduce-gif-size/`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
   ];
 }

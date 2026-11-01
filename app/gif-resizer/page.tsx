@@ -109,17 +109,15 @@ export default function Page() {
             <h2>Resizing is not the same as compressing</h2>
           </div>
           <p className="section-copy">
-            Resizing changes how many pixels wide and tall each frame is. Compressing reduces the
-            file size while keeping the dimensions. A GIF that feels too heavy is often simply too
-            big in pixels — a 800 × 800 emoji has 16 times the pixel data of a 200 × 200 one, and
-            scaling it down fixes the size problem in one step.
-          </p>
-          <p className="section-copy">
             If your GIF is already the right dimensions and still too heavy, use the{' '}
             <Link className="text-link" href="/">
               GIF compressor
-            </Link>{' '}
-            instead.
+            </Link>
+            . If the place you are uploading to has a hard limit such as 1 MB or 512 KB,{' '}
+            <Link className="text-link" href="/reduce-gif-size/">
+              reduce the file size instead
+            </Link>
+            : set the limit and the tool works backwards to the best quality that still fits under it.
           </p>
         </section>
 
