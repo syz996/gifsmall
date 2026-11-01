@@ -24,7 +24,7 @@ const FAQS = [
   },
   {
     q: 'Is my GIF uploaded anywhere?',
-    a: 'No. The file is decoded in your browser with the WebCodecs API and re-encoded locally, so it never leaves your device and the tool keeps working offline once loaded.',
+    a: ' No. The file is decoded and re-encoded in your browser with a Web Worker,so it never leaves your device and the tool keeps working offline once loaded.',
   },
 ];
 
@@ -96,8 +96,8 @@ export default function Page() {
               <span className="step-number">03</span>
               <h3>Download the result</h3>
               <p>
-                The tool tries smaller dimensions and colour counts until the file fits, then shows
-                you the result and two alternatives.
+                The tool tries smaller dimensions and colour counts until the file fits,
+                then shows you the result plus every version it tried.
               </p>
             </div>
           </div>
