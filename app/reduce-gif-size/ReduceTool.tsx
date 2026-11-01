@@ -72,6 +72,9 @@ export default function ReduceTool() {
         setPreviewUrl(null);
         setFile(next);
     }, []);
+    setAttempts([]);
+    setBestIndex(-1);
+    setPreviewIndex(-1);  
 
     const run = useCallback(async () => {
         if (!file || busy) return;
@@ -101,6 +104,7 @@ export default function ReduceTool() {
                 setAttempts([...done]);
                 if (out.after <= targetBytes) {
                     setBestIndex(done.length - 1);
+                    setPreviewIndex(done.length - 1); 
                     break;
                 }
             }
@@ -110,6 +114,7 @@ export default function ReduceTool() {
                 let min = 0;
                 for (let i = 1; i < done.length; i += 1) if (done[i].bytes < done[min].bytes) min = i;
                 setBestIndex(min);
+                setPreviewIndex(min); 
             }
         } catch (e) {
             setError(e instanceof Error ? e.message : 'Could not reduce this GIF.');
