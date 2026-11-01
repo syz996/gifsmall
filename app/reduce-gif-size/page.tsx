@@ -24,7 +24,7 @@ const FAQS = [
   },
   {
     q: 'Is my GIF uploaded anywhere?',
-    a: ' No. The file is decoded and re-encoded in your browser with a Web Worker, so it never leaves your device and the tool keeps working offline once loaded.',
+    a: 'No. The file is decoded and re-encoded in your browser with a Web Worker, so it never leaves your device and the tool keeps working offline once loaded.',
   },
 ];
 
