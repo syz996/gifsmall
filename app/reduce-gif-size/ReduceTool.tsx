@@ -174,7 +174,7 @@ export default function ReduceTool() {
 
   return (
     <section className="resizer-tool" aria-label="GIF size reducer">
-      <UploadZone onFile={handleFile} busy={busy} />
+      <UploadZone onFile={handleFile} busy={busy}  hint="Set 1 MB, 512 KB or your own limit after the GIF loads." />
 
       {file && (
         <div className="controls">
