@@ -338,7 +338,7 @@ export default function ResizerTool() {
 
   return (
     <section className="resizer-tool" aria-label="GIF resizer">
-      <UploadZone onFile={handleFile} busy={busy} />
+      <UploadZone onFile={handleFile} busy={busy} hint="Resize to an exact width or height — frames and timing kept." />
 
       {file && source.w > 0 && (
         <div className="controls">
