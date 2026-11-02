@@ -164,7 +164,7 @@ export default function Compressor() {
 
   return (
     <section className="tool-card" aria-label="GIF compressor">
-      <UploadZone onFile={handleFile} busy={busy} />
+      <UploadZone onFile={handleFile} busy={busy}  hint="Any animated GIF — choose a scale and colour count once it loads." />
 
       <div className="trust-row">
         <span>
