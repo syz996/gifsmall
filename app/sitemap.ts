@@ -5,9 +5,9 @@ export const dynamic = 'force-static';
 
 // 只在页面内容真的改了才动这里：改完记得重新构建部署
 const LASTMOD = {
-  home: '2026-11-01',      // 导航加了 Reduce GIF size 一条
-  resizer: '2026-11-01',   // 同上，header 由 layout 渲染，三页一起变
-  reduce: '2026-11-01',    // 2026-11-01 上线
+  home: '2026-11-03',      // 导航加了 Reduce GIF size 一条
+  resizer: '2026-11-03',   // 同上，header 由 layout 渲染，三页一起变
+  reduce: '2026-11-03',    // 2026-11-01 上线
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {
