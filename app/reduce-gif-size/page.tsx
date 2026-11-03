@@ -20,7 +20,7 @@ const FAQS = [
   },
   {
     q: 'What size do I need for Discord, Slack or email?',
-    a: 'Discord and Slack emoji need 128 × 128 px, and the standard upload limit for free servers is 8 MB (10 MB on some tiers). Most email clients stay safe under 1 MB, and a web page hero is fine around 2 MB as long as it is below the fold.',
+    a: 'Discord and Slack emoji need 128 × 128 px, and the standard upload limit for free servers is 20 MB (10 MB on some tiers). Most email clients stay safe under 1 MB, and a web page hero is fine around 2 MB as long as it is below the fold.',
   },
   {
     q: 'Is my GIF uploaded anywhere?',
@@ -150,6 +150,11 @@ export default function Page() {
               GIF compressor
             </Link>{' '}
             gives you the same controls with a live preview.
+            Sending a GIF to Discord? See{' '}
+            <Link className="text-link" href="/gif-compressor-for-discord/">
+              Discord&apos;s 20 MB upload limit
+            </Link>
+            {' '}and what it takes to stay under it.
           </p>
         </section>
 

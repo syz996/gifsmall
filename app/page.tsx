@@ -158,6 +158,13 @@ export default function Home() {
           </Link>{' '}
           lets you set a hard limit and finds the best quality that fits under it.
         </p>
+        <p className="section-copy">
+          Posting the GIF in Discord? Use the{' '}
+          <Link className="text-link" href="/gif-compressor-for-discord/">
+            GIF compressor for Discord
+          </Link>
+          {' '}— it targets the 20 MB upload limit and the 256 KB auto-play threshold.
+        </p>
       </section>
 
       <script

@@ -15,5 +15,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE_URL}/`, lastModified: LASTMOD.home, changeFrequency: 'weekly', priority: 1 },
     { url: `${SITE_URL}/gif-resizer/`, lastModified: LASTMOD.resizer, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${SITE_URL}/reduce-gif-size/`, lastModified: LASTMOD.reduce, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${SITE_URL}/gif-compressor-for-discord/`, lastModified: '2026-11-03', priority: 0.8 }
   ];
 }

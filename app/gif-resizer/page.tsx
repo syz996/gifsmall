@@ -118,6 +118,11 @@ export default function Page() {
               reduce the file size instead
             </Link>
             : set the limit and the tool works backwards to the best quality that still fits under it.
+            Sending it to Discord instead?{' '}
+            <Link className="text-link" href="/gif-compressor-for-discord/">
+              Compress a GIF for Discord
+            </Link>
+            {' '}to get under the 20 MB upload limit.
           </p>
         </section>
 
