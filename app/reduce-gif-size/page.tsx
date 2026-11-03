@@ -118,7 +118,7 @@ export default function Page() {
                 </tr>
               </thead>
               <tbody>
-                <tr><td>Discord (free server)</td><td>8 MB</td><td>512 KB – 2 MB</td></tr>
+                <tr><td>Discord (free account)</td><td>20 MB</td><td>256 KB – 2 MB</td></tr>
                 <tr><td>Slack</td><td>1 MB for emoji</td><td>128 KB</td></tr>
                 <tr><td>Twitter / X</td><td>15 MB</td><td>2 MB</td></tr>
                 <tr><td>Email attachment</td><td>10–25 MB</td><td>under 1 MB</td></tr>
