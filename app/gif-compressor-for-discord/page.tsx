@@ -198,7 +198,7 @@ export default function Page() {
               resize the GIF first
             </Link>{' '}
             and compress afterwards — halving width and height does more in one pass than any
-            colour setting. For everything else, the{' '}
+            colour setting. For everything else
             <Link className="text-link" href="/">
               the browser-based GIF compressor
             </Link>{' '}
