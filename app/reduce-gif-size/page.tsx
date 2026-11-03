@@ -20,7 +20,7 @@ const FAQS = [
   },
   {
     q: 'What size do I need for Discord, Slack or email?',
-    a: 'Discord and Slack emoji need 128 × 128 px, and the standard upload limit for free servers is 20 MB (10 MB on some tiers). Most email clients stay safe under 1 MB, and a web page hero is fine around 2 MB as long as it is below the fold.',
+    a: 'Discord and Slack emoji need 128 × 128 px and are capped at 256 KB. The free-account upload limit has been 20 MB since August 2026, with Nitro Basic at 50 MB and Nitro up to 1 GB. Most email clients stay safe under 1 MB, and a web page hero is fine around 2 MB as long as it is below the fold.',
   },
   {
     q: 'Is my GIF uploaded anywhere?',
