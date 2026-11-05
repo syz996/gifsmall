@@ -206,6 +206,22 @@ export default function Page() {
           </p>
         </section>
 
+        <section className="content-section">
+  <div className="section-heading">
+    <span className="eyebrow">CHATGPT GIF OUTPUT</span>
+    <h2>Compressing GIFs exported from ChatGPT Images 2.6</h2>
+  </div>
+  <p className="section-copy">
+    OpenAI&apos;s Images 2.6 release, published on 4 November 2026, lists GIF creation as a new capability: ChatGPT can turn a prompt or an uploaded image into an animated GIF. What it hands you is a standard GIF file, so every Discord limit on this page applies to it exactly as it does to any other animation.
+  </p>
+  <p className="section-copy">
+    How large that export turns out depends on the resolution and the number of frames, and it can land above what a free Discord account accepts, or above the size that auto-plays in chat. Drop the downloaded file above and pick 20 MB to get past the upload check, or 256 KB to make it move inline — the compression runs on your own device and nothing is sent to a server.
+  </p>
+  <p className="section-copy">
+    Compressing does not change the frame count or the timing ChatGPT produced; it discards pixel detail and colour depth, which is what makes the file lighter. An animation built for a chat reply keeps its loop and gets small enough to send. If it is still too heavy at the lowest setting, reduce the dimensions first and compress again.
+  </p>
+</section>
+
         <section className="content-section faq-section" id="faq">
           <div className="section-heading">
             <span className="eyebrow">FAQ</span>
