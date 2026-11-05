@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="GIFSmall">
+  <rect width="64" height="64" rx="16" fill="#5b55e7"/>
+  <path d="M41.4 21.6 A14 14 0 1 0 45.9 33.5" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+  <path d="M30 33.5 H45.9" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+</svg>
