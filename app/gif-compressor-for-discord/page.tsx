@@ -234,6 +234,14 @@ export default function Page() {
                 <p>{f.a}</p>
               </details>
             ))}
+            <details className="faq-item">
+              <summary>Can I compress a GIF that ChatGPT generated?</summary>
+              <p>Yes. Images 2.6 exports a standard animated GIF, and this tool reads it in the browser like any other file. Pick the Discord limit you need, download the smaller version, and the frame count and timing stay unchanged.</p>
+            </details>
+            <details className="faq-item">
+              <summary>Why is a ChatGPT GIF too large for Discord?</summary>
+              <p>GIF size grows with resolution and frame count, so an animation exported at full size can exceed the 20 MB a free Discord account accepts, or the roughly 256 KB that lets it auto-play. Compress it here first, and reduce the dimensions if it is still over the limit.</p>
+            </details>
           </div>
         </section>
       </div>
