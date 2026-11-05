@@ -26,6 +26,14 @@ const FAQS = [
     q: 'What if the GIF is still over the limit at the lowest setting?',
     a: 'That means the source file is too heavy for the shared limit at any quality. Resize the dimensions first, then come back and compress again. Cutting the width and height in half removes about three quarters of the pixel data, which is usually enough.',
   },
+  {
+    q: 'Can I compress a GIF that ChatGPT generated?',
+    a: 'Yes. Images 2.6 exports a standard animated GIF, and this tool reads it in the browser like any other file. Pick the Discord limit you need, download the smaller version, and the frame count and timing stay unchanged.',
+  },
+  {
+    q: 'Why is a ChatGPT GIF too large for Discord?',
+    a: 'GIF size grows with resolution and frame count, so an animation exported at full size can exceed the 20 MB a free Discord account accepts, or the roughly 256 KB that lets it auto-play. Compress it here first, and reduce the dimensions if it is still over the limit.',
+  },
 ];
 
 export const metadata: Metadata = {
@@ -50,23 +58,7 @@ export default function Page() {
       '@type': 'Question',
       name: f.q,
       acceptedAnswer: { '@type': 'Answer', text: f.a },
-    },
-    {
-  "@type": "Question",
-  name: "Can I compress a GIF that ChatGPT generated?",
-  acceptedAnswer: {
-    "@type": "Answer",
-    text: "Yes. Images 2.6 exports a standard animated GIF, and this tool reads it in the browser like any other file. Pick the Discord limit you need, download the smaller version, and the frame count and timing stay unchanged."
-  }
-},
-{
-  "@type": "Question",
-  name: "Why is a ChatGPT GIF too large for Discord?",
-  acceptedAnswer: {
-    "@type": "Answer",
-    text: "GIF size grows with resolution and frame count, so an animation exported at full size can exceed the 20 MB a free Discord account accepts, or the roughly 256 KB that lets it auto-play. Compress it here first, and reduce the dimensions if it is still over the limit."
-  }
-})),
+    })),
   };
 
   return (
