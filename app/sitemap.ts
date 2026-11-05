@@ -7,7 +7,7 @@ const LASTMOD = {
   home: '2026-11-03',      // 导航加了 Reduce GIF size 一条
   resizer: '2026-11-03',   // 同上，header 由 layout 渲染，三页一起变
   reduce: '2026-11-03',    // 2026-11-01 上线
-  discord: '2026-11-03',   // 2026-11-03 上线
+  discord: '2026-11-06',   // 2026-11-03 上线
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {
