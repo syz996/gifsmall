@@ -165,6 +165,13 @@ export default function Home() {
           </Link>
           {' '}— it targets the 20 MB upload limit and the 256 KB auto-play threshold.
         </p>
+        <p className="section-copy">
+          Working with a GIF made in ChatGPT? The
+          <a className="text-link" href="/chatgpt-gif-compressor/">
+            {' '}ChatGPT GIF compressor
+          </a>
+          {' '}shrinks Images 2.6 output to the size Discord accepts.
+        </p>
       </section>
 
       <script

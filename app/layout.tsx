@@ -20,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Link href="/gif-resizer/">GIF resizer</Link>
             <Link href="/reduce-gif-size/">Reduce GIF size</Link> 
             <Link href="/gif-compressor-for-discord/">GIF compressor for Discord</Link> 
+            <Link href="/chatgpt-gif-compressor/">ChatGPT GIF compressor</Link>
           </nav>
         </header>
 
