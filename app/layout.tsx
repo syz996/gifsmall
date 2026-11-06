@@ -31,22 +31,40 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <span className="brand-mark">G</span>
             <span>GIFSmall</span>
           </Link>
-                  <a
-                className="footer-badge"
-                href="https://twelve.tools"
-                target="_blank"
-                rel="noopener"
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="https://twelve.tools/badge0-white.svg"
-                  alt="Featured on Twelve Tools"
-                  width={148}
-                  height={40}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </a>
+                  <div className="footer-badges">
+          <a
+            className="footer-badge"
+            href="https://twelve.tools"
+            target="_blank"
+            rel="noopener"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://twelve.tools/badge0-white.svg"
+              alt="Featured on Twelve Tools"
+              width={148}
+              height={40}
+              loading="lazy"
+              decoding="async"
+            />
+          </a>
+          <a
+            className="footer-badge"
+            href="https://startupfa.me/s/gifsmall-1?utm_source=gifsmall.org"
+            target="_blank"
+            rel="noopener"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://startupfa.me/badges/featured-badge-small.webp"
+              alt="GIFSmall - Featured on Startup Fame"
+              width={224}
+              height={36}
+              loading="lazy"
+              decoding="async"
+            />
+          </a>
+        </div>
           <p>Free GIF tools that run in your browser.</p>
           <span>© {new Date().getFullYear()} GIFSmall</span>
         </footer>
