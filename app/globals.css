@@ -182,3 +182,6 @@ a { color: inherit; text-decoration: none; }
 .resizer-tool .version-row button{padding:8px 12px;border:1px solid #dfe3eb;border-radius:8px;background:#fff;color:var(--ink);font-size:12px;font-weight:650;cursor:pointer}
 .resizer-tool .version-row button:hover{border-color:var(--primary);color:var(--primary)}
 .resizer-tool .version-row button[aria-pressed="true"]{border-color:var(--primary);background:#f7f6ff;color:var(--primary)}
+.footer-badges{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.footer-badge{display:inline-flex;flex:0 0 auto;line-height:0}
+.footer-badge img{display:block;width:auto;height:32px}
