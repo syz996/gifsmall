@@ -238,7 +238,7 @@ export default function Compressor() {
                 <span className="spinner" /> Compressing GIF…
               </>
             ) : (
-              'Compress again with these settings'
+               'Compress GIF'
             )}
           </button>
         </div>
