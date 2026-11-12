@@ -2,9 +2,14 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import UploadZone from '@/components/UploadZone';
+import ResultPanel from '@/components/ResultPanel';
+import ToolErrorPanel from '@/components/ToolError';
+import { notGifError, tooLargeError, type ToolError } from '@/lib/errors';
 
 type Job = { blob: Blob; before: number; after: number; width: number; height: number; frames: number };
-type Attempt = { scale: number; maxColors: number; bytes: number; width: number; height: number; blob: Blob };
+type Attempt = { scale: number; maxColors: number; bytes: number; width: number; height: number; frames: number; blob: Blob };
+
+const MAX_INPUT_BYTES = 40 * 1024 * 1024; // 40 MB：手机端内存的保守上限
 
 const LADDER = [
   { scale: 1, maxColors: 64 },
@@ -91,7 +96,7 @@ export default function ReduceTool() {
   const [status, setStatus] = useState('');
   const [attempts, setAttempts] = useState<Attempt[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(-1);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<ToolError | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const selected = selectedIndex >= 0 ? attempts[selectedIndex] ?? null : null;
@@ -109,8 +114,14 @@ export default function ReduceTool() {
 
   const handleFile = useCallback((f: File | undefined) => {
     if (!f) return;
+
+    if (f.size > MAX_INPUT_BYTES) {
+      setError(tooLargeError(f.size, 40));
+      return;
+    }
+
     if (!(f.type === 'image/gif' || /\.gif$/i.test(f.name))) {
-      setError('Please choose a GIF file (.gif).');
+      setError(notGifError(f.name));
       return;
     }
     setError(null);
@@ -145,6 +156,7 @@ export default function ReduceTool() {
           bytes: job.after,
           width: job.width,
           height: job.height,
+          frames: job.frames,
           blob: job.blob,
         });
         setAttempts(tried.slice());
@@ -165,7 +177,13 @@ export default function ReduceTool() {
         setSelectedIndex(smallest);
       }
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Could not reduce this GIF.');
+      setError({
+        title: 'Could not reduce this GIF',
+        body:
+          e instanceof Error
+            ? e.message
+            : 'Reload the page and try again — a very long animation is often the cause.',
+      });
     } finally {
       setStatus('');
       setBusy(false);
@@ -174,7 +192,12 @@ export default function ReduceTool() {
 
   return (
     <section className="resizer-tool" aria-label="GIF size reducer">
-      <UploadZone onFile={handleFile} busy={busy}  hint="Set 1 MB, 512 KB or your own limit after the GIF loads." />
+      <UploadZone
+        onFile={handleFile}
+        onInvalidFile={(name) => setError(notGifError(name))}
+        busy={busy}
+        hint="Set 1 MB, 512 KB or your own limit after the GIF loads."
+      />
 
       {file && (
         <div className="controls">
@@ -215,28 +238,28 @@ export default function ReduceTool() {
         </div>
       )}
 
-      {error && (
-        <p className="error" role="alert">
-          {error}
-        </p>
-      )}
+      <ToolErrorPanel error={error} />
 
       {selected && (
-        <div className="result">
+        <ResultPanel
+          before={file ? file.size : selected.bytes}
+          after={selected.bytes}
+          width={selected.width}
+          height={selected.height}
+          frames={selected.frames}
+          downloadUrl={previewUrl}
+          downloadName={`reduced-${selected.width}x${selected.height}-${Math.round(selected.bytes / 1024)}KB.gif`}
+          status={{
+            text: selected.bytes <= target ? `under ${formatSize(target)}` : `over ${formatSize(target)}`,
+            good: selected.bytes <= target,
+          }}
+        >
           {previewUrl && (
             <img
               src={previewUrl}
               alt={`Reduced GIF preview, ${selected.width} by ${selected.height} pixels`}
             />
           )}
-
-          <p>
-            {selected.width} × {selected.height} · {formatSize(selected.bytes)} ·{' '}
-            {Math.round(selected.scale * 100)}% size · {selected.maxColors} colours ·{' '}
-            {selected.bytes <= target
-              ? `under your ${formatSize(target)} limit`
-              : `over your ${formatSize(target)} limit`}
-          </p>
 
           {attempts.length > 1 && (
             <div className="version-row" role="group" aria-label="Other versions from this run">
@@ -260,14 +283,7 @@ export default function ReduceTool() {
               result above is the smallest version at usable quality.
             </p>
           )}
-
-          <a
-            href={previewUrl ?? '#'}
-            download={`reduced-${selected.width}x${selected.height}-${Math.round(selected.bytes / 1024)}KB.gif`}
-          >
-            Download GIF
-          </a>
-        </div>
+        </ResultPanel>
       )}
     </section>
   );
