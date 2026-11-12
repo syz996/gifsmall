@@ -134,6 +134,72 @@ export default function Page() {
           </div>
         </section>
 
+        <section className="content-section" id="to-10mb">
+          <div className="section-heading">
+            <span className="eyebrow">10 MB TARGET</span>
+            <h2>GIF compressor to 10 MB</h2>
+          </div>
+          <p className="section-copy">
+            10 MB is the safe line for a GIF you want to send anywhere. Gmail caps an
+            attachment at 25 MB, Outlook at 20 MB, X accepts 15 MB and a free Discord
+            account takes 20 MB — so a GIF under 10 MB gets through all of them, even
+            after being forwarded or re-attached a couple of times. Type 10000 in the
+            size field, drop the file and the tool keeps the largest dimensions and
+            colour count that still fit under ten megabytes.
+          </p>
+          <p className="section-copy">
+            A GIF that starts above 30 MB usually needs its dimensions reduced as well,
+            not just its palette. Halving width and height removes about three quarters
+            of the pixel data, so a 40 MB animation often lands under 10 MB after one
+            resize pass and a re-encode. If the result is still over, resize first with
+            the <a className="text-link" href="/gif-resizer/">GIF resizer</a> and come
+            back here with the smaller file — the two passes together beat any single
+            colour setting.
+          </p>
+        </section>
+
+        <section className="content-section" id="to-1mb">
+          <div className="section-heading">
+            <span className="eyebrow">1 MB TARGET</span>
+            <h2>Compress a GIF to 1 MB</h2>
+          </div>
+          <p className="section-copy">
+            1 MB is the practical ceiling for a GIF that sits on a web page or goes into
+            a newsletter. Most email clients stay safe under 1 MB, and a GIF used as a
+            hero or a section illustration should stay below it too — it loads on a
+            phone connection without making the page feel stuck. Type 1024 in the size
+            field: the tool tries smaller frame sizes and colour counts in order and
+            stops at the first version that fits, so you get the sharpest GIF that still
+            passes one megabyte.
+          </p>
+          <p className="section-copy">
+            1 MB leaves room for maybe 40–60 frames at 480 px wide. If your animation is
+            longer than that, cut the frame count in the source editor rather than
+            squeezing the palette to 16 colours, which is where banding starts to show
+            on gradients.
+          </p>
+        </section>
+
+        <section className="content-section" id="to-512kb">
+          <div className="section-heading">
+            <span className="eyebrow">512 KB TARGET</span>
+            <h2>Compress a GIF to 512 KB</h2>
+          </div>
+          <p className="section-copy">
+            512 KB is the size to aim for when the GIF has to load instantly or fit a
+            tight box: an animated reaction in a forum signature, a thumbnail, a preview
+            image, Discord's server sticker limit (512 KB at 320 × 320 px). Type 512 and
+            the tool will drop the palette before it drops the frame count, because a
+            smaller palette is far less noticeable than missing frames.
+          </p>
+          <p className="section-copy">
+            Below 512 KB the pixel dimensions matter more than anything else. A 320 px
+            wide GIF compresses to half a megabyte with 128 colours without visible
+            damage; the same animation at 800 px wide needs 32 colours and starts to
+            look blotchy on faces and skies.
+          </p>
+        </section>
+
         <section className="content-section">
           <div className="section-heading">
             <span className="eyebrow">THE TRADE-OFF</span>
