@@ -26,6 +26,14 @@ const FAQS = [
     q: 'Is my GIF uploaded anywhere?',
     a: 'No. The file is decoded and re-encoded in your browser with a Web Worker, so it never leaves your device and the tool keeps working offline once loaded.',
   },
+  {
+    q: "Can I compress a GIF to exactly 10 MB?",
+    a: "Yes — type 10000 in the size field. The tool treats the number as a hard ceiling in kilobytes and stops at the first encode that fits, so the result lands just under 10 MB rather than exactly on it. Anything close to the line is fine for email, forums and Discord; uploads that are checked to the byte are safer at 9.5 MB.",
+  },
+  {
+    q: "What is the smallest size a GIF can be compressed to?",
+    a: "It depends on the frame count and dimensions rather than on the tool. A short, small GIF can reach 100 KB or less; a long animation at full size will bottom out far above 512 KB no matter which palette setting you choose. When the tool cannot reach your target, resize the dimensions first and compress the smaller file again.",
+  },
 ];
 
 export const metadata: Metadata = {
