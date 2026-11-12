@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: 'How do I compress a GIF?',
-    a: 'Choose a GIF, adjust the resize and maximum color settings, then select Compress GIF. Preview the result and download it if you are happy with the output.',
+    a: 'Choose a GIF, adjust the resize and maximum color settings, then select Compress GIF. Preview the result and download it if you are happy with the output. The tool also compresses once automatically as soon as you drop a file, so you can see a result before touching the settings.',
   },
   {
     q: 'Are my GIF files uploaded?',
