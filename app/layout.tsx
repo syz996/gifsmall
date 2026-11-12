@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from "next/link";
 import './globals.css';
+import SiteNav from '@/components/SiteNav';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://gifsmall.org'),
@@ -15,23 +16,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <span className="brand-mark">G</span>
             <span>GIFSmall</span>
           </Link>
-          <nav aria-label="Main navigation">
-            <Link href="/">GIF compressor</Link>
-            <Link href="/gif-resizer/">GIF resizer</Link>
-            <Link href="/reduce-gif-size/">Reduce GIF size</Link> 
-            <Link href="/gif-compressor-for-discord/">GIF compressor for Discord</Link> 
-            <Link href="/chatgpt-gif-compressor/">ChatGPT GIF compressor</Link>
-          </nav>
+          <SiteNav />
         </header>
-
         {children}
-
         <footer className="site-footer page-shell">
           <Link className="brand footer-brand" href="/">
             <span className="brand-mark">G</span>
             <span>GIFSmall</span>
           </Link>
-                  <div className="footer-badges">
+          <nav className="footer-nav" aria-label="All GIF tools">
+            <Link href="/">GIF compressor</Link>
+            <Link href="/gif-resizer/">Resize an animated GIF</Link>
+            <Link href="/reduce-gif-size/">Compress a GIF to 10 MB, 1 MB or 512 KB</Link>
+            <Link href="/gif-compressor-for-discord/">GIF compressor for Discord</Link>
+            <Link href="/chatgpt-gif-compressor/">Compress a ChatGPT GIF</Link>
+          </nav>
+          <div className="footer-badges">
           <a
             className="footer-badge"
             href="https://twelve.tools"
