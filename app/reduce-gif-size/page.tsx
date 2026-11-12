@@ -78,6 +78,13 @@ export default function Page() {
         </section>
 
         <ReduceTool />
+        <nav className="content-section anchor-nav" aria-label="GIF size targets">
+        <a className="text-link" href="#to-10mb">GIF compressor to 10 MB</a>
+        {" · "}
+        <a className="text-link" href="#to-1mb">Compress a GIF to 1 MB</a>
+        {" · "}
+        <a className="text-link" href="#to-512kb">Compress a GIF to 512 KB</a>
+      </nav>
 
         <section className="content-section" id="how-it-works">
           <div className="section-heading">
