@@ -3,7 +3,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import UploadZone from '@/components/UploadZone';
-
+import ToolError from '@/components/ToolError';、import ResultPanel from '@/components/ResultPanel';、import { notGifError, browserError, toolErrorFor, type ToolError } from '@/lib/errors';
 type SourceInfo = {
   w: number;
   h: number;
@@ -29,6 +29,7 @@ type Mode = 'idle' | 'decoding' | 'encoding' | 'error';
 type RGB = [number, number, number];
 
 const MAX_FRAMES = 600;
+const MAX_INPUT_BYTES = 40 * 1024 * 1024; // 40 MB：手机端内存的保守上限
 const MIN_SIZE = 8;
 const MAX_SIZE = 2000;
 
@@ -51,7 +52,7 @@ export default function ResizerTool() {
   const [linked, setLinked] = useState(true);
   const [mode, setMode] = useState<Mode>('idle');
   const [progress, setProgress] = useState(0);
-  const [error, setError] = useState('');
+  const [error, setError] = useState<ToolError | null>(null);
   const [result, setResult] = useState<Result | null>(null);
 
   const decodedRef = useRef<Decoded | null>(null);
@@ -138,9 +139,13 @@ export default function ResizerTool() {
   const handleFile = useCallback(
     async (f: File | undefined) => {
       if (!f) return;
+      if (f.size > MAX_INPUT_BYTES) {
+      setError({ title: `This GIF is ${formatKb(f.size)} — the limit is 40 MB`, body: 'Resize a smaller export, or split the animation first.' });
+      return;
+    }
 
       if (!/\.gif$/i.test(f.name) && f.type !== 'image/gif') {
-        setError('Please choose a .gif file.');
+        setError(notGifError(f.name));
         return;
       }
 
@@ -338,7 +343,7 @@ export default function ResizerTool() {
 
   return (
     <section className="resizer-tool" aria-label="GIF resizer">
-      <UploadZone onFile={handleFile} busy={busy} hint="Resize to an exact width or height — frames and timing kept." />
+      <UploadZone onFile={handleFile}  onInvalidFile={(name) => setError(notGifError(name))}   busy={busy} hint="Resize to an exact width or height — frames and timing kept." />
 
       {file && source.w > 0 && (
         <div className="controls">
@@ -466,35 +471,15 @@ export default function ResizerTool() {
       )}
 
       {result && (
-        <div className="result">
-          <img
-            src={result.url}
-            alt={`Resized GIF preview, ${result.w} by ${result.h} pixels`}
-          />
-
-          <p>
-            {result.w} × {result.h} · {formatKb(result.bytes)}
-
-            {source.bytes > 0 && result.bytes > 0 && (
-              <>
-                {' · '}
-
-                {result.bytes < source.bytes
-                  ? `${Math.round(
-                    (1 - result.bytes / source.bytes) * 100,
-                  )}% smaller`
-                  : 'already optimized — try a size button above'}
-              </>
-            )}
-          </p>
-
-          <a
-            href={result.url}
-            download={`resized-${result.w}x${result.h}.gif`}
-          >
-            Download GIF
-          </a>
-        </div>
+        <ResultPanel
+          before={source.bytes}
+          after={result.bytes}
+          width={result.w}
+          height={result.h}
+          frames={source.frames}
+          downloadUrl={result.url}
+          downloadName={`resized-${result.w}x${result.h}.gif`}
+        />
       )}
     </section>
   );
