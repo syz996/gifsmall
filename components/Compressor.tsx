@@ -1,7 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import UploadZone from '@/components/UploadZone';
+import ResultPanel from '@/components/ResultPanel';
+import ToolErrorPanel from '@/components/ToolError';
+import { compressGif } from '@/lib/gifEngine';
+import { formatSize } from '@/lib/format';
+import { notGifError, tooLargeError, workerError, type ToolError } from '@/lib/errors';
 
 type CompressionResult = {
   blob: Blob;
@@ -17,108 +23,24 @@ type CompressionOptions = {
   maxColors?: number;
 };
 
-async function runGifCompression(
-  file: File,
-  options: CompressionOptions = {},
-): Promise<CompressionResult> {
-  const buffer = await file.arrayBuffer();
-  const before = file.size;
+// 拖入即压用的默认参数
+const DEFAULT_OPTIONS: Required<CompressionOptions> = {
+  scale: 0.75,
+  maxColors: 64,
+};
 
-  return new Promise((resolve, reject) => {
-    let worker: Worker;
-    try {
-      // ⚠️ 这一行按你本地原样保留（worker 文件名我看不到，其余都已核对）
-      worker = new Worker(new URL('../workers/gif.worker.ts', import.meta.url));
-    } catch {
-      reject(new Error('Web Workers are not supported in this browser.'));
-      return;
-    }
-
-    let settled = false;
-    const cleanup = () => worker.terminate();
-    const fail = (message: string) => {
-      if (settled) return;
-      settled = true;
-      cleanup();
-      reject(new Error(message));
-    };
-
-    worker.onmessage = (event: MessageEvent) => {
-      if (settled) return;
-      const data = event.data;
-
-      if (data?.error) {
-        fail(data.error);
-        return;
-      }
-
-      if (
-        data?.blob &&
-        typeof data.after === 'number' &&
-        typeof data.width === 'number' &&
-        typeof data.height === 'number' &&
-        typeof data.frames === 'number'
-      ) {
-        settled = true;
-        cleanup();
-        resolve({
-          blob: data.blob,
-          before,
-          after: data.after,
-          width: data.width,
-          height: data.height,
-          frames: data.frames,
-        });
-        return;
-      }
-
-      fail('The compression worker returned an incomplete result.');
-    };
-
-    worker.onerror = (event) =>
-      fail(event.message || 'The compression worker stopped unexpectedly.');
-    worker.onmessageerror = () =>
-      fail('Could not read the compression result from the worker.');
-
-    try {
-      worker.postMessage({ buffer, opts: options }, [buffer]);
-    } catch {
-      fail('Could not send the GIF to the local compression worker.');
-    }
-  });
-}
-
-function formatBytes(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1048576) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
-}
+const MAX_INPUT_BYTES = 40 * 1024 * 1024; // 40 MB，与三个内页保持一致
 
 export default function Compressor() {
   const [file, setFile] = useState<File | null>(null);
-  const [scale, setScale] = useState(1);
-  const [maxColors, setMaxColors] = useState(128);
+  const [scale, setScale] = useState(DEFAULT_OPTIONS.scale);
+  const [maxColors, setMaxColors] = useState(DEFAULT_OPTIONS.maxColors);
   const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<ToolError | null>(null);
   const [result, setResult] = useState<CompressionResult | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-  function handleFile(next: File | undefined) {
-    if (!next) return;
-
-    if (!(next.type === 'image/gif' || /\.gif$/i.test(next.name))) {
-      setError('Please choose a GIF file (.gif).');
-      return;
-    }
-
-    setError(null);
-    setResult(null);
-    setFile(next);
-  }
-
-  async function compress(overrides?: CompressionOptions) {
-    if (!file || busy)return;
-
+  async function compress(next: File, overrides?: CompressionOptions) {
     const nextScale = overrides?.scale ?? scale;
     const nextColors = overrides?.maxColors ?? maxColors;
 
@@ -127,20 +49,41 @@ export default function Compressor() {
     setResult(null);
 
     try {
-      const output = await runGifCompression(file, {
+      const output = await compressGif(next, {
         scale: nextScale,
         maxColors: nextColors,
       });
       setResult(output);
     } catch (err) {
       setError(
-        err instanceof Error
-          ? err.message
-          : 'Compression failed. Please try another GIF.',
+        workerError(err instanceof Error ? err.message : undefined),
       );
     } finally {
       setBusy(false);
     }
+  }
+
+  function handleFile(next: File | undefined) {
+    if (!next) return;
+
+    if (!(next.type === 'image/gif' || /\.gif$/i.test(next.name))) {
+      setError(notGifError(next.name));
+      return;
+    }
+
+    if (next.size > MAX_INPUT_BYTES) {
+      setError(tooLargeError(next.size, 40));
+      return;
+    }
+
+    setError(null);
+    setResult(null);
+    setFile(next);
+
+    // 拖入即压：用默认参数先跑一次，用户先看到结果再调参数
+    setScale(DEFAULT_OPTIONS.scale);
+    setMaxColors(DEFAULT_OPTIONS.maxColors);
+    void compress(next, DEFAULT_OPTIONS);
   }
 
   useEffect(() => {
@@ -155,16 +98,16 @@ export default function Compressor() {
     return () => URL.revokeObjectURL(url);
   }, [result]);
 
-  const savedBytes = result ? result.before - result.after : 0;
-  const savedPercent =
-    result && result.before > 0
-      ? Math.round((1 - result.after / result.before) * 100)
-      : 0;
-  const isSmaller = savedBytes > 0;
+  const isSmaller = result ? result.after < result.before : false;
 
   return (
     <section className="tool-card" aria-label="GIF compressor">
-      <UploadZone onFile={handleFile} busy={busy}  hint="Any animated GIF — choose a scale and colour count once it loads." />
+      <UploadZone
+        onFile={handleFile}
+        onInvalidFile={(name) => setError(notGifError(name))}
+        busy={busy}
+        hint="Drop a GIF and it starts compressing right away — adjust the settings after you see the result."
+      />
 
       <div className="trust-row">
         <span>
@@ -178,13 +121,65 @@ export default function Compressor() {
         </span>
       </div>
 
+      <ToolErrorPanel error={error} />
+
+      {result && previewUrl && (
+        <ResultPanel
+          before={result.before}
+          after={result.after}
+          width={result.width}
+          height={result.height}
+          frames={result.frames}
+          downloadUrl={previewUrl}
+          downloadName={`small-${file?.name ?? 'gif'}`}
+          status={
+            isSmaller
+              ? { text: 'smaller', good: true }
+              : { text: 'already optimized', good: false }
+          }
+        >
+          <div className="preview-wrap">
+            <img src={previewUrl} alt="Compressed animated GIF preview" />
+          </div>
+
+          {!isSmaller && (
+            <div className="retry-row">
+              <button
+                className="secondary-button"
+                type="button"
+                disabled={busy}
+                onClick={() => {
+                  if (!file) return;
+                  setScale(0.5);
+                  void compress(file, { scale: 0.5 });
+                }}
+              >
+                Try Resize 50%
+              </button>
+              <button
+                className="secondary-button"
+                type="button"
+                disabled={busy}
+                onClick={() => {
+                  if (!file) return;
+                  setMaxColors(64);
+                  void compress(file, { maxColors: 64 });
+                }}
+              >
+                Try 64 colors
+              </button>
+            </div>
+          )}
+        </ResultPanel>
+      )}
+
       {file && (
         <div className="settings-area">
           <div className="selected-file">
             <div className="file-symbol">GIF</div>
             <div className="file-details">
               <strong title={file.name}>{file.name}</strong>
-              <span>{formatBytes(file.size)}</span>
+              <span>{formatSize(file.size)}</span>
             </div>
             <button
               className="text-button"
@@ -233,7 +228,8 @@ export default function Compressor() {
             className="primary-button"
             type="button"
             onClick={() => {
-              void compress();
+              if (!file) return;
+              void compress(file);
             }}
             disabled={busy}
           >
@@ -242,111 +238,23 @@ export default function Compressor() {
                 <span className="spinner" /> Compressing GIF…
               </>
             ) : (
-              'Compress GIF'
+              'Compress again with these settings'
             )}
           </button>
         </div>
       )}
 
-      {error && (
-        <div className="error-message" role="alert">
-          {error}
-        </div>
-      )}
-
-      {result && previewUrl && (
-        <div className="result-area">
-          <div className="result-heading">
-            <div>
-              <span className="eyebrow">COMPRESSION COMPLETE</span>
-              <h3>Your GIF is ready</h3>
-            </div>
-            <span className={isSmaller ? 'result-status good' : 'result-status neutral'}>
-              {isSmaller ? `${savedPercent}% smaller` : 'Already optimized'}
-            </span>
-          </div>
-
-          <div className="comparison-grid">
-            <div className="comparison-item">
-              <span>Original</span>
-              <strong>{formatBytes(result.before)}</strong>
-            </div>
-            <div className="comparison-arrow">→</div>
-            <div className="comparison-item">
-              <span>Compressed</span>
-              <strong>{formatBytes(result.after)}</strong>
-            </div>
-          </div>
-
-          <p className="result-meta">
-            Output: {result.width} × {result.height}px · {result.frames} frames
-            {isSmaller
-              ? ` · Saved ${formatBytes(savedBytes)}`
-              : ' · Nothing left to squeeze at these settings'}
-          </p>
-
-          {!isSmaller && (
-            <>
-              <p className="tool-footnote">
-                This GIF is already compressed. Shrink it further with{' '}
-                <strong>Resize 50%</strong> or <strong>64 colors</strong> —
-                already-optimized GIFs usually drop 50–70% that way.
-              </p>
-              <div className="retry-row">
-                <button
-                  className="secondary-button"
-                  type="button"
-                  disabled={busy}
-                  onClick={() => {
-                    setScale(0.5);
-                    void compress({ scale: 0.5 });
-                  }}
-                >
-                  Try Resize 50%
-                </button>
-                <button
-                  className="secondary-button"
-                  type="button"
-                  disabled={busy}
-                  onClick={() => {
-                    setMaxColors(64);
-                    void compress({ maxColors: 64 });
-                  }}
-                >
-                  Try 64 colors
-                </button>
-              </div>
-            </>
-          )}
-
-          <div className="preview-wrap">
-            <img src={previewUrl} alt="Compressed animated GIF preview" />
-          </div>
-
-          <a
-            className="download-button"
-            href={previewUrl}
-            download={`small-${file?.name ?? 'gif'}`}
-          >
-            Download GIF
-          </a>
-
-          <button
-            className="secondary-button"
-            type="button"
-            onClick={() => {
-              setResult(null);
-              setError(null);
-            }}
-          >
-            Adjust settings and try again
-          </button>
-        </div>
-      )}
+      <p className="tool-footnote">
+        Your file is processed locally in this browser. Large GIFs may take longer
+        depending on your device.
+      </p>
 
       <p className="tool-footnote">
-        Your file is processed locally in this browser. Large GIFs may take
-        longer depending on your device.
+        Need to hit an exact cap?{' '}
+        <Link href="/reduce-gif-size/">Compress a GIF to a target size</Link>
+        {' · '}
+        Posting to Discord?{' '}
+        <Link href="/gif-compressor-for-discord/">Check the upload limits</Link>
       </p>
     </section>
   );
