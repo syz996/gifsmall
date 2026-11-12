@@ -167,9 +167,9 @@ export default function Home() {
         </p>
         <p className="section-copy">
           Working with a GIF made in ChatGPT? The
-          <a className="text-link" href="/chatgpt-gif-compressor/">
+          <Link className="text-link" href="/chatgpt-gif-compressor/">
             {' '}ChatGPT GIF compressor
-          </a>
+          </Link>
           {' '}shrinks Images 2.6 output to the size Discord accepts.
         </p>
       </section>
