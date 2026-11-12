@@ -49,7 +49,7 @@ const faqs = [
   },
   {
     q: 'Is there a file size limit?',
-    a: 'There is no server upload limit because files are processed locally. Practical limits depend on your device memory, browser, GIF dimensions, and frame count.',
+    a: 'Files are processed locally, so nothing is uploaded and there is no server-side limit. The tool accepts a single GIF up to 40 MB; for anything larger, resize it first with the GIF resizer and compress the smaller file. Within that cap, practical limits depend on your device memory, browser, GIF dimensions, and frame count.',
   },
   {
     q: 'Does GIFSmall add a watermark?',
