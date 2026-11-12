@@ -2,6 +2,19 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SITE_URL } from '@/lib/site';
 import ReduceTool from './ReduceTool';
+import { renderOg, ogSize, ogContentType } from "@/lib/og-image";
+
+export const size = ogSize;
+export const contentType = ogContentType;
+export const alt = "Reduce GIF Size — compress a GIF to 10 MB, 1 MB or 512 KB";
+
+export default function Image() {
+  return renderOg({
+    eyebrow: "GIFSMALL.ORG",
+    title: "Hit the exact size",
+    sub: "10 MB · 1 MB · 512 KB — free, in your browser",
+  });
+}
 
 const PAGE_URL = `${SITE_URL}/reduce-gif-size/`;
 
