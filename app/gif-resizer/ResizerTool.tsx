@@ -1,9 +1,11 @@
-
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import UploadZone from '@/components/UploadZone';
-import ToolError from '@/components/ToolError';、import ResultPanel from '@/components/ResultPanel';、import { notGifError, browserError, toolErrorFor, type ToolError } from '@/lib/errors';
+import ResultPanel from '@/components/ResultPanel';
+import ToolErrorPanel from '@/components/ToolError';
+import { notGifError, tooLargeError, type ToolError } from '@/lib/errors';
+
 type SourceInfo = {
   w: number;
   h: number;
@@ -139,10 +141,11 @@ export default function ResizerTool() {
   const handleFile = useCallback(
     async (f: File | undefined) => {
       if (!f) return;
+
       if (f.size > MAX_INPUT_BYTES) {
-      setError({ title: `This GIF is ${formatKb(f.size)} — the limit is 40 MB`, body: 'Resize a smaller export, or split the animation first.' });
-      return;
-    }
+        setError(tooLargeError(f.size, 40));
+        return;
+      }
 
       if (!/\.gif$/i.test(f.name) && f.type !== 'image/gif') {
         setError(notGifError(f.name));
@@ -160,7 +163,7 @@ export default function ResizerTool() {
       }
 
       setResult(null);
-      setError('');
+      setError(null);
       setProgress(0);
       setFile(f);
       setMode('decoding');
@@ -188,9 +191,13 @@ export default function ResizerTool() {
       } catch (e) {
         setMode('error');
 
-        setError(
-          e instanceof Error ? e.message : 'Could not read this GIF.',
-        );
+        setError({
+          title: 'Could not read this GIF',
+          body:
+            e instanceof Error
+              ? e.message
+              : 'Try another file — this GIF may be corrupted or use a feature the browser cannot decode.',
+        });
       }
     },
     [decode],
@@ -213,7 +220,7 @@ export default function ResizerTool() {
     if (!source_ || !w || !h) return;
 
     setMode('encoding');
-    setError('');
+    setError(null);
     setProgress(45);
 
     try {
@@ -333,9 +340,13 @@ export default function ResizerTool() {
     } catch (e) {
       setMode('error');
 
-      setError(
-        e instanceof Error ? e.message : 'Could not resize this GIF.',
-      );
+      setError({
+        title: 'Could not resize this GIF',
+        body:
+          e instanceof Error
+            ? e.message
+            : 'Reload the page and try again — a very long animation is often the cause.',
+      });
     }
   }, [width, height]);
 
@@ -343,7 +354,12 @@ export default function ResizerTool() {
 
   return (
     <section className="resizer-tool" aria-label="GIF resizer">
-      <UploadZone onFile={handleFile}  onInvalidFile={(name) => setError(notGifError(name))}   busy={busy} hint="Resize to an exact width or height — frames and timing kept." />
+      <UploadZone
+        onFile={handleFile}
+        onInvalidFile={(name) => setError(notGifError(name))}
+        busy={busy}
+        hint="Resize to an exact width or height — frames and timing kept."
+      />
 
       {file && source.w > 0 && (
         <div className="controls">
@@ -464,11 +480,7 @@ export default function ResizerTool() {
         </p>
       )}
 
-      {error && (
-        <p className="error" role="alert">
-          {error}
-        </p>
-      )}
+      <ToolErrorPanel error={error} />
 
       {result && (
         <ResultPanel
