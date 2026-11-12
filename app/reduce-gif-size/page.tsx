@@ -29,16 +29,22 @@ const FAQS = [
 ];
 
 export const metadata: Metadata = {
-  title: 'Reduce GIF Size Online — Compress GIF to 1 MB, 512 KB, Free',
+  title: "Reduce GIF Size — Compress GIF to 10 MB, 1 MB, 512 KB",
   description:
-    'Reduce GIF file size to a target limit right in your browser. Set 1 MB, 512 KB or any size and the tool finds the best quality that fits — no upload, no watermark.',
-  alternates: { canonical: PAGE_URL },
+    "Compress a GIF to 10 MB, 1 MB, 512 KB or any limit you type. The tool lowers dimensions and colours until the file fits — in your browser, no upload.",
+  alternates: { canonical: `${SITE_URL}/reduce-gif-size/` },
   openGraph: {
-    url: PAGE_URL,
-    type: 'website',
-    title: 'Reduce GIF Size Online — Compress GIF to 1 MB, 512 KB, Free',
+    title: "Reduce GIF Size — Compress GIF to 10 MB, 1 MB, 512 KB",
     description:
-      'Shrink a GIF to an exact file size limit locally in your browser. Keep the animation, choose 1 MB or 512 KB, download in seconds.',
+      "Hit an exact GIF size limit: 10 MB, 1 MB or 512 KB. Compression runs on your device, animation and transparency preserved.",
+    url: `${SITE_URL}/reduce-gif-size/`,
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Reduce GIF Size — Compress GIF to 10 MB, 1 MB, 512 KB",
+    description:
+      "Hit an exact GIF size limit: 10 MB, 1 MB or 512 KB. Runs in your browser.",
   },
 };
 
