@@ -37,7 +37,7 @@ const FAQS = [
 ];
 
 export const metadata: Metadata = {
-  title: 'GIF Compressor for Discord — Under 20 MB or 256 KB',
+  title: 'GIF Compressor for Discord — GIF Size Limit 20 MB / 256 KB',
   description:
     'Compress a GIF for Discord in your browser. Get under the free 20 MB upload limit, or down to 256 KB so it auto-plays — no upload, no watermark, free.',
   alternates: { canonical: PAGE_URL },
@@ -84,7 +84,7 @@ export default function Page() {
         <section className="content-section">
           <div className="section-heading">
             <span className="eyebrow">DISCORD LIMITS</span>
-            <h2>Discord file size limits in 2026</h2>
+            <h2>Discord GIF size limit in 2026</h2>
           </div>
           <div className="table-wrap">
             <table>
@@ -116,12 +116,14 @@ export default function Page() {
             <span className="eyebrow">TWO DIFFERENT LIMITS</span>
             <h2>Uploading and auto-playing are two different limits</h2>
           </div>
+          <h3>Discord GIF size limit for uploads: 20 MB</h3>
           <p className="section-copy">
             The 20 MB limit decides whether Discord accepts the file at all. The auto-play
             threshold decides whether the GIF moves inside the chat, or arrives as a static frame
             nobody clicks. They are far apart, which is why a GIF that uploads fine can still feel
             broken to the person receiving it.
           </p>
+          <h3>Discord GIF size limit for auto-play: about 256 KB</h3>
           <p className="section-copy">
             Discord has never officially published the auto-play threshold, so 256 KB is the number
             that holds up in practice rather than a documented rule. If the animation matters more
@@ -148,7 +150,26 @@ export default function Page() {
             rejected outright — aim slightly below the number rather than exactly at it.
           </p>
         </section>
-
+       <section className="content-section" id="why-discord-compressor">
+  <div className="section-heading">
+    <span className="eyebrow">WHY THIS ONE</span>
+    <h2>A Discord GIF compressor, not just any GIF compressor</h2>
+  </div>
+  <p className="section-copy">
+    A generic compressor makes a file smaller and leaves you guessing whether it
+    is small enough. This page starts from Discord's own numbers: 20 MB for a
+    free upload, 50 MB for Nitro Basic, 256 KB for an emoji and for a GIF that
+    auto-plays in chat, 512 KB for a server sticker. Pick the limit, and the
+    tool keeps the sharpest version that still fits that limit instead of
+    crushing everything to the same quality.
+  </p>
+  <p className="section-copy">
+    It also runs entirely in your browser, which matters for Discord: private
+    server GIFs never leave your machine, and the tool keeps working with no
+    connection once the page has loaded. No upload step, no watermark, no
+    account.
+  </p>
+</section>
         <section className="content-section">
           <div className="section-heading">
             <span className="eyebrow">HOW IT WORKS</span>
