@@ -4,12 +4,14 @@ import { useRef, useState } from 'react';
 
 type Props = {
   onFile: (file: File) => void;
+  onInvalidFile?: (fileName: string) => void;
   hint?: string;
   busy?: boolean;
 };
 
 export default function UploadZone({
   onFile,
+  onInvalidFile,
   hint = 'GIF files only. Everything runs in your browser.',
   busy = false,
 }: Props) {
@@ -23,7 +25,10 @@ export default function UploadZone({
   const handleFiles = (files: FileList | null) => {
     const file = files?.[0];
     if (!file) return;
-    if (file.type !== 'image/gif' && !/\.gif$/i.test(file.name)) return;
+    if (file.type !== 'image/gif' && !/\.gif$/i.test(file.name)) {
+      onInvalidFile?.(file.name);
+      return;
+    }
     onFile(file);
   };
 
