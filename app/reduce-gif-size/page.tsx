@@ -39,7 +39,7 @@ const FAQS = [
 export const metadata: Metadata = {
   title: "Reduce GIF Size — Compress GIF to 10 MB, 1 MB, 512 KB",
   description:
-    "Compress a GIF to 10 MB, 1 MB, 512 KB or any limit you type. The tool lowers dimensions and colours until the file fits — in your browser, no upload.",
+    "Reduce GIF file size to 10 MB, 1 MB, 512 KB or any limit you type. The tool lowers dimensions and colours until the GIF fits — in your browser, no upload.",
   alternates: { canonical: `${SITE_URL}/reduce-gif-size/` },
   openGraph: {
     title: "Reduce GIF Size — Compress GIF to 10 MB, 1 MB, 512 KB",
@@ -79,20 +79,20 @@ export default function Page() {
           <span className="eyebrow">FREE ONLINE GIF TOOL</span>
           <h1>Reduce GIF Size</h1>
           <p className="hero-copy">
-            Set the file size you need — 1 MB, 512 KB or anything else — and this tool finds the
-            best quality that fits. The animation, timing and transparency stay intact, and the GIF
-            is processed entirely in your browser.
+            Reduce GIF file size to whatever limit you need — 1 MB, 512 KB or anything else — and
+            this tool finds the best quality that fits. The animation, timing and transparency stay
+            intact, and the GIF is processed entirely in your browser.
           </p>
         </section>
 
         <ReduceTool />
         <nav className="content-section anchor-nav" aria-label="GIF size targets">
-        <a className="text-link" href="#to-10mb">GIF compressor to 10 MB</a>
-        {" · "}
-        <a className="text-link" href="#to-1mb">Compress a GIF to 1 MB</a>
-        {" · "}
-        <a className="text-link" href="#to-512kb">Compress a GIF to 512 KB</a>
-      </nav>
+          <a className="text-link" href="#to-10mb">GIF compressor to 10 MB</a>
+          {" · "}
+          <a className="text-link" href="#to-1mb">Compress a GIF to 1 MB</a>
+          {" · "}
+          <a className="text-link" href="#to-512kb">Compress a GIF to 512 KB</a>
+        </nav>
 
         <section className="content-section" id="how-it-works">
           <div className="section-heading">
@@ -218,7 +218,7 @@ export default function Page() {
         <section className="content-section">
           <div className="section-heading">
             <span className="eyebrow">THE TRADE-OFF</span>
-            <h2>Pixel size, colours and weight</h2>
+            <h2>How to reduce GIF file size: pixel size, colours and weight</h2>
           </div>
           <p className="section-copy">
             A GIF stores every frame as a full image, so the file size grows with the number of

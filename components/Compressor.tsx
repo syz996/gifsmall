@@ -238,7 +238,7 @@ export default function Compressor() {
                 <span className="spinner" /> Compressing GIF…
               </>
             ) : (
-               'Compress GIF'
+              'Compress GIF'
             )}
           </button>
         </div>
@@ -251,7 +251,7 @@ export default function Compressor() {
 
       <p className="tool-footnote">
         Need to hit an exact cap?{' '}
-        <Link href="/reduce-gif-size/">Compress a GIF to a target size</Link>
+      <Link href="/reduce-gif-size/">Reduce GIF size to an exact limit</Link>
         {' · '}
         Posting to Discord?{' '}
         <Link href="/gif-compressor-for-discord/">Check the upload limits</Link>
