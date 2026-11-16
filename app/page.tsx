@@ -83,7 +83,7 @@ export default function Home() {
                 <span className="eyebrow">FREE ONLINE GIF TOOL</span>
         <h1>GIF Compressor</h1>
         <p className="hero-slogan"><strong>Make GIFs smaller.</strong> Keep them moving.</p>
-        <p className="hero-copy">
+        <p className="hero-copy"></p>
       </section>
 
       <Compressor />
