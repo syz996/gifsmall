@@ -80,11 +80,10 @@ export default function Home() {
     <main className="page-shell">
 
       <section className="hero">
-        <span className="eyebrow">FREE ONLINE GIF TOOL</span>
+                <span className="eyebrow">FREE ONLINE GIF TOOL</span>
         <h1>GIF Compressor</h1>
+        <p className="hero-slogan"><strong>Make GIFs smaller.</strong> Keep them moving.</p>
         <p className="hero-copy">
-          Compress GIF files in your browser. Your files stay on your device — no upload, no account, no watermark.
-        </p>
       </section>
 
       <Compressor />
